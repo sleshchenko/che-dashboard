@@ -126,6 +126,18 @@ export class WorkspaceDetailsController {
       return;
     }
 
+    this.TAB = ['Overview', 'Projects', 'Plugins', 'Editors', DEVFILE_TAB];
+    this.updateTabs();
+
+    this.updateSelectedTab(this.$location.search().tab);
+    const searchDeRegistrationFn = $scope.$watch(() => {
+      return $location.search().tab;
+    }, (tab: string) => {
+      if (angular.isDefined(tab)) {
+        this.updateSelectedTab(tab);
+      }
+    }, true);
+
     this.namespaceId = initData.namespaceId;
     this.workspaceName = initData.workspaceName;
     this.workspaceId = initData.workspaceDetails.id;
@@ -159,17 +171,7 @@ export class WorkspaceDetailsController {
     this.initialWorkspaceDetails = angular.copy(initData.workspaceDetails);
     this.setWorkspaceDetails(initData.workspaceDetails);
     this.updateDeprecatedInfo();
-    this.TAB = ['Overview', 'Projects', 'Plugins', 'Editors', DEVFILE_TAB];
-    this.updateTabs();
 
-    this.updateSelectedTab(this.$location.search().tab);
-    const searchDeRegistrationFn = $scope.$watch(() => {
-      return $location.search().tab;
-    }, (tab: string) => {
-      if (angular.isDefined(tab)) {
-        this.updateSelectedTab(tab);
-      }
-    }, true);
     const failedTabsDeregistrationFn = $scope.$watch(() => {
       return this.checkForFailedTabs();
     }, () => {
