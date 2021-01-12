@@ -12,7 +12,7 @@ name: PR
 # Trigger the workflow on push
 on:
   pull_request:
-    branches: [main-react]
+    branches: [master]
 
 env:
   DIR_DASHBOARD: che-dashboard
